@@ -19,9 +19,8 @@
 [INFO   ] GL: Texture max units <16>
 [INFO   ] Window: auto add sdl2 input provider
 [INFO   ] Window: virtual keyboard not allowed, single mode, not docked
-[WARNING] Deprecated property "<BooleanProperty name=allow_stretch>" of object "<kivy.uix.image.Image object at 0x6efaf62b30>" has been set, it will be removed in a future version
-[WARNING] Deprecated property "<BooleanProperty name=keep_ratio>" of object "<kivy.uix.image.Image object at 0x6efaf62b30>" has been set, it will be removed in a future version
+[INFO   ] Clipboard: Provider: android
+[INFO   ] GL: NPOT texture support is available
 [WARNING] Base: Unknown <android> provider
 [INFO   ] Base: Start application main loop
-[INFO   ] GL: NPOT texture support is available
 [INFO   ] Base: Leaving application in progress...

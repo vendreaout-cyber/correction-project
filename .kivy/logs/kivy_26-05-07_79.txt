@@ -1,4 +1,4 @@
-[INFO   ] Logger: Record log in /storage/emulated/0/ru.iiec.pydroid3/files/.kivy/logs/kivy_26-05-07_81.txt
+[INFO   ] Logger: Record log in /storage/emulated/0/ru.iiec.pydroid3/files/.kivy/logs/kivy_26-05-07_79.txt
 [INFO   ] Kivy: v2.3.1
 [INFO   ] Kivy: Installed at "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.13/site-packages/kivy/__init__.py"
 [INFO   ] Python: v3.13.2 (main, Apr 27 2025, 04:34:27) [GCC 11.4.0]
@@ -19,9 +19,8 @@
 [INFO   ] GL: Texture max units <16>
 [INFO   ] Window: auto add sdl2 input provider
 [INFO   ] Window: virtual keyboard not allowed, single mode, not docked
-[WARNING] Deprecated property "<BooleanProperty name=allow_stretch>" of object "<kivy.uix.image.Image object at 0x6efb0f2b30>" has been set, it will be removed in a future version
-[WARNING] Deprecated property "<BooleanProperty name=keep_ratio>" of object "<kivy.uix.image.Image object at 0x6efb0f2b30>" has been set, it will be removed in a future version
+[INFO   ] Clipboard: Provider: android
+[INFO   ] GL: NPOT texture support is available
 [WARNING] Base: Unknown <android> provider
 [INFO   ] Base: Start application main loop
-[INFO   ] GL: NPOT texture support is available
 [INFO   ] Base: Leaving application in progress...
