@@ -1,32 +1,49 @@
-name: Build APK
+name: Build Python APK
 on: [push, workflow_dispatch]
-
-permissions:
-  contents: read
-  actions: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.24.0'
-      
-      - name: Get dependencies
-        run: flutter pub get
-      
-      - name: Build APK
-        run: flutter build apk --release
-      
-      - name: Upload APK
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: apk-build-${{ github.run_number }}
-          path: build/app/outputs/apk/release/app-release.apk
-          retention-days: 30
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+    
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y git zip unzip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+    
+    - name: Install Buildozer
+      run: |
+        pip install --user --upgrade Cython==0.29.33
+        pip install --user buildozer
+    
+    - name: Make buildozer spec
+      run: |
+        buildozer init
+        sed -i 's/requirements = python3,kivy/requirements = python3/g' buildozer.spec
+        sed -i 's/android.api = 27/android.api = 31/g' buildozer.spec
+        sed -i 's/android.minapi = 21/android.minapi = 21/g' buildozer.spec
+        sed -i 's/android.accept_sdk_license = False/android.accept_sdk_license = True/g' buildozer.spec
+    
+    - name: Build APK
+      run: |
+        buildozer android debug
+    
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: python-app.apk
+        path: bin/*.apk
