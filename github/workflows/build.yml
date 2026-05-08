@@ -1,5 +1,4 @@
 name: Build APK
-
 on: [push, workflow_dispatch]
 
 permissions:
@@ -17,9 +16,8 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.24.0'
-          channel: 'stable'
       
-      - name: الحصول على المتعلقات
+      - name: الحصول على ��لمتعلقات
         run: flutter pub get
       
       - name: بناء APK
@@ -32,11 +30,3 @@ jobs:
           name: apk-build-${{ github.run_number }}
           path: build/app/outputs/apk/release/app-release.apk
           retention-days: 30
-      
-      - name: إخطار عند النجاح
-        if: success()
-        run: echo "✅ تم بناء APK بنجاح!"
-      
-      - name: إخطار عند الفشل
-        if: failure()
-        run: echo "❌ فشل بناء APK!"
