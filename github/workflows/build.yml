@@ -1,37 +1,42 @@
 name: Build APK
+
 on: [push, workflow_dispatch]
+
+permissions:
+  contents: read
+  actions: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: استخراج الكود
         uses: actions/checkout@v4
       
-      - name: Setup Flutter
+      - name: إعداد Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.x.x'
+          flutter-version: '3.24.0'
+          channel: 'stable'
       
-      - name: Get dependencies
+      - name: الحصول على المتعلقات
         run: flutter pub get
       
-      - name: Build APK
+      - name: بناء APK
         run: flutter build apk --release
-        continue-on-error: true
       
-      - name: Upload APK artifact
+      - name: تحميل APK كـ Artifact
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: flutter-apk
+          name: apk-build-${{ github.run_number }}
           path: build/app/outputs/apk/release/app-release.apk
           retention-days: 30
       
-      - name: Notify on failure
-        if: failure()
-        run: echo "❌ Build failed! Check logs for details."
-      
-      - name: Notify on success
+      - name: إخطار عند النجاح
         if: success()
-        run: echo "✅ APK built successfully!"
+        run: echo "✅ تم بناء APK بنجاح!"
+      
+      - name: إخطار عند الفشل
+        if: failure()
+        run: echo "❌ فشل بناء APK!"
