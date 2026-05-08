@@ -5,9 +5,32 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Build APK
-        uses: ArtemSBulgakov/buildozer-action@v1
-        with:
-          command: buildozer android debug
-          buildozer_version: stable
+    - uses: actions/checkout@v4
+    
+    - name: Setup Java and Dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y openjdk-17-jdk git zip unzip wget
+        echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> $GITHUB_ENV
+    
+    - name: Setup Python and Buildozer
+      run: |
+        pip install --upgrade pip
+        pip install cython==0.29.33
+        pip install buildozer
+    
+    - name: Configure Buildozer
+      run: |
+        buildozer init
+        sed -i 's/requirements = python3,kivy/requirements = python3,kivy,requests,plyer/' buildozer.spec
+        sed -i 's/android.accept_sdk_license = False/android.accept_sdk_license = True/' buildozer.spec
+        sed -i 's/# android.ndk = 23b/android.ndk = 25b/' buildozer.spec
+    
+    - name: Build APK
+      run: buildozer android debug
+    
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: AI-Code-Corrector
+        path: bin/*.apk
