@@ -17,7 +17,7 @@ jobs:
         with:
           flutter-version: '3.24.0'
       
-      - name: الحصول على ��لمتعلقات
+      - name: الحصول على المتعلقات
         run: flutter pub get
       
       - name: بناء APK
